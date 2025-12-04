@@ -1,0 +1,362 @@
+﻿<!--  Ventana principal sin bordes, con tamaño fijo y estilo oscuro  -->
+<Window
+    x:Class="PasswordManager.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    Title="Password Manager"
+    Width="700"
+    Height="450"
+    Background="#1E1E1E"
+    ResizeMode="NoResize"
+    WindowStartupLocation="CenterScreen"
+    WindowStyle="None">
+
+    <Border BorderBrush="#3C3C3C" BorderThickness="1">
+        <Grid>
+
+            <!--  BARRA SUPERIOR  -->
+            <Grid
+                Height="40"
+                Margin="0,0,0,408"
+                Background="#2D2D30"
+                MouseDown="DragWindow">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <!--  Título  -->
+                <StackPanel
+                    Margin="10,0,0,0"
+                    VerticalAlignment="Center"
+                    Orientation="Horizontal">
+                    <TextBlock
+                        VerticalAlignment="Center"
+                        FontSize="16"
+                        FontWeight="Bold"
+                        Foreground="White"
+                        Text="🔐 Password Manager" />
+                </StackPanel>
+
+                <!--  Botones  -->
+                <StackPanel
+                    Grid.Column="1"
+                    VerticalAlignment="Center"
+                    Orientation="Horizontal">
+
+                    <!--  Botón para minimizar la aplicación  -->
+                    <Button
+                        Width="40"
+                        Height="40"
+                        Background="Transparent"
+                        BorderThickness="0"
+                        Click="Minimize_Click"
+                        ToolTip="Minimizar">
+                        <Button.Style>
+                            <Style TargetType="Button">
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="Button">
+                                            <Border
+                                                x:Name="bd"
+                                                Padding="10"
+                                                Background="{TemplateBinding Background}">
+                                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                            </Border>
+
+                                            <ControlTemplate.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter TargetName="bd" Property="Background" Value="#686868" />
+                                                </Trigger>
+                                                <Trigger Property="IsPressed" Value="True">
+                                                    <Setter TargetName="bd" Property="Background" Value="#3b3b3b" />
+                                                </Trigger>
+                                            </ControlTemplate.Triggers>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </Button.Style>
+                        <TextBlock
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            FontSize="20"
+                            Foreground="White"
+                            Text="—" />
+                    </Button>
+
+                    <!--  Botón para cerrar la aplicación  -->
+                    <Button
+                        Width="40"
+                        Height="40"
+                        Background="Transparent"
+                        BorderThickness="0"
+                        Click="Close_Click"
+                        ToolTip="Cerrar">
+                        <Button.Style>
+                            <Style TargetType="Button">
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="Button">
+                                            <Border
+                                                x:Name="bd"
+                                                Padding="10"
+                                                Background="{TemplateBinding Background}">
+                                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                            </Border>
+
+                                            <ControlTemplate.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter TargetName="bd" Property="Background" Value="#E53935" />
+                                                </Trigger>
+                                                <Trigger Property="IsPressed" Value="True">
+                                                    <Setter TargetName="bd" Property="Background" Value="#8E0000" />
+                                                </Trigger>
+                                            </ControlTemplate.Triggers>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </Button.Style>
+                        <TextBlock
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            FontSize="18"
+                            Foreground="White"
+                            Text="✕" />
+                    </Button>
+
+                </StackPanel>
+            </Grid>
+
+            <!--  Contenedor principal con separación para header, lista y footer  -->
+            <Grid Margin="20,60,20,20">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <!--  Header  -->
+                <Grid Grid.Row="0" Margin="0,0,0,12">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock
+                        VerticalAlignment="Center"
+                        FontSize="20"
+                        FontWeight="Bold"
+                        Foreground="White"
+                        Text="📝 MIS CONTRASEÑAS" />
+
+                    <!--  Botón para abrir el formulario de creación de contraseña  -->
+                    <Button
+                        Grid.Column="1"
+                        Width="140"
+                        Height="40"
+                        Background="#0E639C"
+                        Click="AddPassword_Click"
+                        Content="Añadir nueva"
+                        Cursor="Hand"
+                        FontWeight="Bold"
+                        Foreground="White">
+                        <Button.Style>
+                            <Style TargetType="Button">
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="Button">
+                                            <Border
+                                                x:Name="bd"
+                                                Padding="10"
+                                                Background="{TemplateBinding Background}"
+                                                CornerRadius="6">
+                                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                            </Border>
+
+                                            <ControlTemplate.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter TargetName="bd" Property="Background" Value="#1177BB" />
+                                                </Trigger>
+                                                <Trigger Property="IsPressed" Value="True">
+                                                    <Setter TargetName="bd" Property="Background" Value="#094771" />
+                                                </Trigger>
+                                            </ControlTemplate.Triggers>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </Button.Style>
+                    </Button>
+                    <Button
+                        Grid.Column="1"
+                        Width="140"
+                        Height="40"
+                        Background="#007ACC"
+                        Click="AddPassword_Click"
+                        Content="Añadir nueva"
+                        Cursor="Hand"
+                        FontWeight="Bold"
+                        Foreground="White">
+                        <Button.Style>
+                            <Style TargetType="{x:Type Button}">
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="{x:Type Button}">
+                                            <Border
+                                                x:Name="bd"
+                                                Padding="10"
+                                                Background="{TemplateBinding Background}"
+                                                CornerRadius="6">
+                                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                            </Border>
+
+                                            <ControlTemplate.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter TargetName="bd" Property="Background" Value="#1177BB" />
+                                                </Trigger>
+                                                <Trigger Property="IsPressed" Value="True">
+                                                    <Setter TargetName="bd" Property="Background" Value="#094771" />
+                                                </Trigger>
+                                            </ControlTemplate.Triggers>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </Button.Style>
+                    </Button>
+                </Grid>
+
+                <!--  Tabla donde se muestran todas las contraseñas  -->
+                <DataGrid
+                    x:Name="dgPasswords"
+                    Grid.Row="1"
+                    AlternatingRowBackground="#262626"
+                    AutoGenerateColumns="False"
+                    Background="#252526"
+                    BorderBrush="#3C3C3C"
+                    CanUserAddRows="False"
+                    ColumnHeaderHeight="32"
+                    FontSize="14"
+                    Foreground="#E0E0E0"
+                    GridLinesVisibility="None"
+                    HeadersVisibility="Column"
+                    HorizontalGridLinesBrush="#3C3C3C"
+                    RowBackground="#1E1E1E"
+                    RowHeaderWidth="0"
+                    VerticalGridLinesBrush="#3C3C3C">
+
+                    <!--  Estilo de encabezados  -->
+                    <DataGrid.ColumnHeaderStyle>
+                        <Style TargetType="DataGridColumnHeader">
+                            <Setter Property="Background" Value="#2D2D30" />
+                            <Setter Property="Foreground" Value="#E0E0E0" />
+                            <Setter Property="FontWeight" Value="Bold" />
+                            <Setter Property="BorderBrush" Value="#3C3C3C" />
+                            <Setter Property="BorderThickness" Value="0,0,0,1" />
+                        </Style>
+                    </DataGrid.ColumnHeaderStyle>
+
+                    <DataGrid.Columns>
+                        <!--  Columna: Sitio web  -->
+                        <DataGridTextColumn
+                            Width="1*"
+                            Binding="{Binding Site}"
+                            Header="Sitio"
+                            IsReadOnly="True" />
+                        <!--  Columna: Usuario  -->
+                        <DataGridTextColumn
+                            Width="1*"
+                            Binding="{Binding Username}"
+                            Header="Usuario"
+                            IsReadOnly="True" />
+
+                        <DataGridTemplateColumn Width="2*" Header="Contraseña">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+
+                                    <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
+                                        <!--  Botón eliminar  -->
+                                        <Button
+                                            Width="32"
+                                            Height="32"
+                                            Margin="0,0,10,0"
+                                            Background="Transparent"
+                                            Click="DeletePassword_Click"
+                                            Cursor="Hand"
+                                            Tag="{Binding}"
+                                            ToolTip="Eliminar">
+                                            <Button.Template>
+                                                <ControlTemplate TargetType="Button">
+                                                    <Grid>
+                                                        <TextBlock
+                                                            HorizontalAlignment="Center"
+                                                            VerticalAlignment="Center"
+                                                            FontSize="18"
+                                                            Foreground="#E57373"
+                                                            Text="🗑️" />
+                                                    </Grid>
+
+                                                    <ControlTemplate.Triggers>
+                                                        <Trigger Property="IsMouseOver" Value="True">
+                                                            <Setter Property="Foreground" Value="#EF5350" />
+                                                        </Trigger>
+                                                    </ControlTemplate.Triggers>
+                                                </ControlTemplate>
+                                            </Button.Template>
+                                        </Button>
+                                        <!--  Botón ver  -->
+                                        <Button
+                                            Width="32"
+                                            Height="32"
+                                            Background="Transparent"
+                                            Click="TogglePasswordVisibility"
+                                            Cursor="Hand"
+                                            Tag="{Binding Password}"
+                                            ToolTip="Mostrar u ocultar">
+                                            <TextBlock
+                                                HorizontalAlignment="Center"
+                                                VerticalAlignment="Center"
+                                                FontSize="16"
+                                                Text="👁️" />
+                                        </Button>
+                                        <!--  Contraseña oculta  -->
+                                        <TextBlock
+                                            x:Name="txtHiddenPassword"
+                                            Margin="10,0,0,0"
+                                            VerticalAlignment="Center"
+                                            Text="●●●●●●"
+                                            Visibility="Visible" />
+                                        <!--  Contraseña visible  -->
+                                        <TextBlock
+                                            x:Name="txtRealPassword"
+                                            Margin="10,0,0,0"
+                                            VerticalAlignment="Center"
+                                            Foreground="#A5D6A7"
+                                            Text="{Binding Password}"
+                                            Visibility="Collapsed" />
+
+                                    </StackPanel>
+
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+
+                    </DataGrid.Columns>
+
+                </DataGrid>
+
+                <!--  FOOTER  -->
+                <TextBlock
+                    Grid.Row="2"
+                    Margin="0,10,0,0"
+                    HorizontalAlignment="Center"
+                    FontSize="12"
+                    Foreground="#777"
+                    Text="Gestor de contraseñas - Juan Jesús González Hernández - 01-12-2025" />
+            </Grid>
+
+        </Grid>
+    </Border>
+</Window>
