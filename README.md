@@ -1,4 +1,4 @@
-# 🔐 Password Manager (WPF)
+![Banner](img/password-manager-banner.svg)
 
 - Sencillo **gestor de contraseñas** desarrollado en **C# y WPF**.
 - Contiene encriptación básica, persistencia de datos y diseño en UI/UX.
